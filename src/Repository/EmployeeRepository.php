@@ -6,6 +6,7 @@ use App\Entity\Employee;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -44,6 +45,13 @@ class EmployeeRepository extends ServiceEntityRepository
             $this->_em->flush();
         }
     }
+
+    // public function findAll() :Query
+    // {
+    //     return $this->createQueryBuilder('employee')
+    //     ->getQuery();
+    // }
+
 
     // /**
     //  * @return Employee[] Returns an array of Employee objects

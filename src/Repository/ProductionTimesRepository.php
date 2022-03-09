@@ -2,30 +2,30 @@
 
 namespace App\Repository;
 
-use App\Entity\EmployeeProjects;
+use App\Entity\ProductionTimes;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method EmployeeProjects|null find($id, $lockMode = null, $lockVersion = null)
- * @method EmployeeProjects|null findOneBy(array $criteria, array $orderBy = null)
- * @method EmployeeProjects[]    findAll()
- * @method EmployeeProjects[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method ProductionTimes|null find($id, $lockMode = null, $lockVersion = null)
+ * @method ProductionTimes|null findOneBy(array $criteria, array $orderBy = null)
+ * @method ProductionTimes[]    findAll()
+ * @method ProductionTimes[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class EmployeeProjectsRepository extends ServiceEntityRepository
+class ProductionTimesRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, EmployeeProjects::class);
+        parent::__construct($registry, ProductionTimes::class);
     }
 
     /**
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(EmployeeProjects $entity, bool $flush = true): void
+    public function add(ProductionTimes $entity, bool $flush = true): void
     {
         $this->_em->persist($entity);
         if ($flush) {
@@ -37,7 +37,7 @@ class EmployeeProjectsRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(EmployeeProjects $entity, bool $flush = true): void
+    public function remove(ProductionTimes $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);
         if ($flush) {
@@ -46,15 +46,15 @@ class EmployeeProjectsRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return EmployeeProjects[] Returns an array of EmployeeProjects objects
+    //  * @return ProductionTimes[] Returns an array of ProductionTimes objects
     //  */
     /*
     public function findByExampleField($value)
     {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.exampleField = :val')
             ->setParameter('val', $value)
-            ->orderBy('e.id', 'ASC')
+            ->orderBy('p.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
@@ -63,10 +63,10 @@ class EmployeeProjectsRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?EmployeeProjects
+    public function findOneBySomeField($value): ?ProductionTimes
     {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.exampleField = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()

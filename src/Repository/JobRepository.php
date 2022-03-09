@@ -6,6 +6,7 @@ use App\Entity\Job;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -44,6 +45,7 @@ class JobRepository extends ServiceEntityRepository
             $this->_em->flush();
         }
     }
+
 
     // /**
     //  * @return Job[] Returns an array of Job objects

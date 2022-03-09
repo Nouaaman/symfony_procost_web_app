@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProjectRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
@@ -19,7 +21,7 @@ class Project
     #[ORM\Column(type: 'string', length: 255)]
     private $description;
 
-    #[ORM\Column(type: 'float')]
+    #[ORM\Column(type: 'float', nullable: true)]
     private $sellingPrice;
 
     #[ORM\Column(type: 'date')]
@@ -27,6 +29,14 @@ class Project
 
     #[ORM\Column(type: 'date', nullable: true)]
     private $deliveryDate;
+
+    #[ORM\OneToMany(mappedBy: 'idProject', targetEntity: ProductionTimes::class)]
+    private $time;
+
+    public function __construct()
+    {
+        $this->time = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -89,6 +99,36 @@ class Project
     public function setDeliveryDate(?\DateTimeInterface $deliveryDate): self
     {
         $this->deliveryDate = $deliveryDate;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProductionTimes>
+     */
+    public function getTime(): Collection
+    {
+        return $this->time;
+    }
+
+    public function addTime(ProductionTimes $time): self
+    {
+        if (!$this->time->contains($time)) {
+            $this->time[] = $time;
+            $time->setIdProject($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTime(ProductionTimes $time): self
+    {
+        if ($this->time->removeElement($time)) {
+            // set the owning side to null (unless already changed)
+            if ($time->getIdProject() === $this) {
+                $time->setIdProject(null);
+            }
+        }
 
         return $this;
     }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EmployeeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EmployeeRepository::class)]
@@ -22,15 +24,23 @@ class Employee
     #[ORM\Column(type: 'string', length: 255)]
     private ?string $email;
 
-    #[ORM\ManyToOne(targetEntity: Job::class, inversedBy: 'employees')]
-    #[ORM\JoinColumn(name: 'id', nullable: false)]
-    private ?int $idJob;
 
     #[ORM\Column(type: 'float')]
     private ?float $dailyCost;
 
     #[ORM\Column(type: 'date')]
     private ?\DateTime $hiringDate = null;
+
+    #[ORM\OneToMany(mappedBy: 'idEmployee', targetEntity: ProductionTimes::class)]
+    private $time;
+
+    #[ORM\ManyToOne(targetEntity: Job::class, inversedBy: 'employees')]
+    private $idJob;
+
+    public function __construct()
+    {
+        $this->time = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -73,17 +83,6 @@ class Employee
         return $this;
     }
 
-    public function getidJob(): ?int
-    {
-        return $this->idJob;
-    }
-
-    public function setidJob(int $idJob): self
-    {
-        $this->idJob = $idJob;
-
-        return $this;
-    }
 
     public function getDailyCost(): ?float
     {
@@ -105,6 +104,48 @@ class Employee
     public function setHiringDate(\DateTimeInterface $hiringDate): self
     {
         $this->hiringDate = $hiringDate;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProductionTimes>
+     */
+    public function getTime(): Collection
+    {
+        return $this->time;
+    }
+
+    public function addTime(ProductionTimes $time): self
+    {
+        if (!$this->time->contains($time)) {
+            $this->time[] = $time;
+            $time->setIdEmployee($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTime(ProductionTimes $time): self
+    {
+        if ($this->time->removeElement($time)) {
+            // set the owning side to null (unless already changed)
+            if ($time->getIdEmployee() === $this) {
+                $time->setIdEmployee(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getIdJob(): ?Job
+    {
+        return $this->idJob;
+    }
+
+    public function setIdJob(?Job $idJob): self
+    {
+        $this->idJob = $idJob;
 
         return $this;
     }
