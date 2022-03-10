@@ -45,6 +45,16 @@ class ProductionTimesRepository extends ServiceEntityRepository
         }
     }
 
+    public function productionDays(): int|null
+    {
+        return $this->createQueryBuilder('p')
+            ->select('SUM(p.productionTime)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+
+
     // /**
     //  * @return ProductionTimes[] Returns an array of ProductionTimes objects
     //  */

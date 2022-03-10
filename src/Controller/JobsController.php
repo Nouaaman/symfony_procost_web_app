@@ -11,17 +11,23 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class JobsController extends AbstractController
 {
+
+    public function __construct(
+        private JobRepository $jobRepository,
+    ) {
+    }
+
     #[Route('/jobs', name: 'jobs_homepage')]
-    public function listJobs(PaginatorInterface $paginatorInterface, JobRepository $jobRepository, Request $request): Response
+    public function listJobs(PaginatorInterface $paginatorInterface, Request $request): Response
     {
         $jobs = $paginatorInterface->paginate(
-            $jobRepository->findAll(),
+            $this->jobRepository->findAll(),
             $request->query->getInt('page', 1),
             10
         );
 
         return $this->render('jobs/jobs.html.twig', [
-            'jobs'=>$jobs
+            'jobs' => $jobs
         ]);
     }
 }

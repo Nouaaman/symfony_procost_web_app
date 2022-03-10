@@ -20,7 +20,7 @@ Acceuil |
                         <i class="icon fa fa-spinner fa-3x" aria-hidden="true"></i>
                         <div class="info">
                             <p class="text-muted text-sm text-uppercase">Projets en cours</p>
-                            <p><strong>11</strong></p>
+                            <p><strong>{{nbrCurrentProjects}}</strong></p>
                         </div>
                     </div>
                 </div>
@@ -29,7 +29,7 @@ Acceuil |
                         <i class="icon fa fa-check-square-o fa-3x" aria-hidden="true"></i>
                         <div class="info">
                             <p class="text-muted text-sm text-uppercase">Projets livrés</p>
-                            <p><strong>76</strong></p>
+                            <p><strong>{{nbrDeliveredProjects}}</strong></p>
                         </div>
                     </div>
                 </div>
@@ -38,7 +38,7 @@ Acceuil |
                         <i class="icon fa fa-users fa-3x"></i>
                         <div class="info">
                             <p class="text-muted text-sm text-uppercase">Employés</p>
-                            <p><strong>34</strong></p>
+                            <p><strong>{{nbrEmployees}}</strong></p>
                         </div>
                     </div>
                 </div>
@@ -47,7 +47,7 @@ Acceuil |
                         <i class="icon fa fa-calendar-check-o fa-3x" aria-hidden="true"></i>
                         <div class="info">
                             <p class="text-muted text-sm text-uppercase">Jours de production</p>
-                            <p><strong>267</strong></p>
+                            <p><strong>{{productionDays ? productionDays: 0}}</strong></p>
                         </div>
                     </div>
                 </div>
@@ -117,51 +117,23 @@ Acceuil |
                         </tr>
                     </thead>
                     <tbody>
+
+                        {% for project in latestProjects %}
                         <tr>
                             <th>
-                                <a href="#">Mon projet</a>
+                                <a href="#">{{project.name}}</a>
                             </th>
-                            <th>18/03/2018</th>
-                            <th>20 000 €</th>
-                            <th>3 200 €</th>
+                            <th>{{project.creationDate | date('d/m/Y')}}</th>
+                            <th>{{project.sellingPrice|format_currency('EUR')}}</th>
+                            <th>{{project.sellingPrice|format_currency('EUR')}}</th>
                             <th>
-                                <span class="badge badge-success">OUI</span>
+                                <span class="badge {{ project.deliveryDate ? 'badge-success' :'badge-danger' }}">
+                                    {{ project.deliveryDate ? 'OUI' :'NON'}}
+                                </span>
                             </th>
                         </tr>
-                        <tr>
-                            <th>
-                                <a href="#">Mon projet</a>
-                            </th>
-                            <th>18/03/2018</th>
-                            <th>20 000 €</th>
-                            <th>3 200 €</th>
-                            <th>
-                                <span class="badge badge-success">OUI</span>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th>
-                                <a href="#">Mon projet</a>
-                            </th>
-                            <th>18/03/2018</th>
-                            <th>20 000 €</th>
-                            <th>3 200 €</th>
-                            <th>
-                                <span class="badge badge-success">OUI</span>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th>
-                                <a href="#">Mon projet</a>
-                            </th>
-                            <th>18/03/2018</th>
-                            <th>20 000 €</th>
-                            <th>3 200 €</th>
-                            <th>
-                                <span class="badge badge-success">OUI</span>
-                            </th>
-                        </tr>
-                        <tr>
+                        {% endfor %}
+                        <!-- <tr>
                             <th>
                                 <a href="#">Mon projet</a>
                             </th>
@@ -171,7 +143,7 @@ Acceuil |
                             <th>
                                 <span class="badge badge-danger">NON</span>
                             </th>
-                        </tr>
+                        </tr> -->
                     </tbody>
                 </table>
             </div>

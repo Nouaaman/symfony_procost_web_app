@@ -8,6 +8,8 @@ use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\ResultSetMapping;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Employee|null find($id, $lockMode = null, $lockVersion = null)
@@ -46,6 +48,37 @@ class EmployeeRepository extends ServiceEntityRepository
         }
     }
 
+    public function nbrEmployees(): int
+    {
+        return $this->createQueryBuilder('e')
+            ->select('COUNT(e)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+
+    public function findAllWithJob(): array
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery('SELECT e as employee , j.name as job FROM App\Entity\Employee e, App\Entity\Job j WHERE e.idJob = j.id');
+        return $query->getResult();
+    }
+
+    public function findOneWithJob(int $id): array
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery('SELECT e as employee , j.name as job FROM App\Entity\Employee e, App\Entity\Job j WHERE e.id = :id AND e.idJob = j.id')
+            ->setParameter('id', $id);
+        return $query->getOneOrNullResult();
+    }
+
+
+    // private function addJoinJob(QueryBuilder $qb): void
+    // {
+    //     $qb
+    //         ->addSelect('j')
+    //         ->innerJoin('e.idJob', 'j');
+    // }
     // public function findAll() :Query
     // {
     //     return $this->createQueryBuilder('employee')

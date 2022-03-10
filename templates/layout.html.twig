@@ -2,7 +2,7 @@
 
 {% block style %}
 {{ parent() }}
-<link rel="stylesheet" href="css/main.css" />
+<link rel="stylesheet" href="/css/main.css" />
 <link rel="stylesheet" type="text/css"
     href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
@@ -23,7 +23,7 @@
 <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
 <aside class="app-sidebar">
     <div class="app-sidebar__user">
-        <img class="app-sidebar__user-avatar" src="img/user.jpg" alt="User Image">
+        <img class="app-sidebar__user-avatar" src="/img/user.jpg" alt="User Image">
         <div>
             <p class="app-sidebar__user-name">John Doe</p>
             <p class="app-sidebar__user-designation">Manager</p>
@@ -72,7 +72,7 @@
 
 
 {% block js %}
-<script src="js/pace.min.js"></script>
+<script src="/js/pace.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
 </script>
@@ -82,7 +82,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
     integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous">
 </script>
-<script src="js/main.js"></script>
+<script src="/js/main.js"></script>
 
 <!-- Specific page JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"
@@ -91,6 +91,6 @@
     var ratioData = [70, 30];
     var deliveredData = [35, 65];
 </script>
-<script src="js/dashboard.js"></script>
+<script src="/js/dashboard.js"></script>
 {% endblock %}
 {% endblock %}
