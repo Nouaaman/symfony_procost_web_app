@@ -1,0 +1,51 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}
+Métiers |
+{{parent()}}
+{% endblock %}
+
+{% block content %}
+<main class="app-content">
+    <div class="app-title">
+        <div>
+            <h1><i class="fa fa-users"></i>&nbsp;Ajout d'un métier</h1>
+        </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#"><i class="fa fa-home fa-lg"></i></a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="#">Metiers</a>
+            </li>
+            <li class="breadcrumb-item">Ajout d'un Métier</li>
+        </ul>
+    </div>
+    <div class="tile">
+        {{ include('_flash_message.html.twig') }}
+        {{ form_start(form) }}
+        <div class="form-horizontal">
+            <section>
+                <h3>Informations du métier</h3>
+                <div class="row mt-4">
+                    <div class="offset-md-4 col-md-8">
+                        <div class="form-group row">
+                            <label class="control-label col-md-3">Métier</label>
+                            <div class="col-md-9">
+                                {{ form_widget(form.name, {'attr': {'class': 'form-control', 'placeholder': 'Intitulé'} }) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <hr />
+            <div class="row">
+                <div class="offset-md-6 col-md-6">
+                    <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>Enregistrer</a>
+                </div>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+</main>
+{% endblock %}
