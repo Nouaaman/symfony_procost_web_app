@@ -1,24 +1,22 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}
-Métiers |
-{{parent()}}
-{% endblock %}
+{% block title %} Details | {{parent()}} {% endblock %}
 
 {% block content %}
+
 <main class="app-content">
     <div class="app-title">
         <div>
-            <h1><i class="fa fa-users"></i>&nbsp;Suivi de Prénom NOM</h1>
+            <h1><i class="fa fa-users"></i>&nbsp;Suivi du project: {{project.name}} </h1>
         </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item">
                 <a href="#"><i class="fa fa-home fa-lg"></i></a>
             </li>
             <li class="breadcrumb-item">
-                <a href="#">Employés</a>
+                <a href="#">Projet</a>
             </li>
-            <li class="breadcrumb-item">Suivi de Prénom NOM</li>
+            <li class="breadcrumb-item">Suivi du project: {{project.name}} </li>
         </ul>
     </div>
     <div class="row">
@@ -27,69 +25,35 @@ Métiers |
                 <table class="table table-striped table-bordered table-sm">
                     <tbody>
                         <tr>
-                            <th>Prénom</td>
-                            <td>Jack</td>
-                        </tr>
-                        <tr>
                             <th>Nom</td>
-                            <td>FROST</td>
+                            <td>{{project.name}}</td>
                         </tr>
                         <tr>
-                            <th>Email</td>
-                            <td>jfrost@procost.com</td>
+                            <th>Description</td>
+                            <td>{{project.description}}</td>
                         </tr>
                         <tr>
-                            <th>Métier</td>
-                            <td>Web developer</td>
+                            <th>Prix de vente</td>
+                            <td>{{project.sellingPrice|format_currency('EUR')}}</td>
                         </tr>
                         <tr>
-                            <th>Coût journalier</td>
-                            <td>500 €</td>
+                            <th>Date de creation</td>
+                            <td>{{project.creationDate | date('d/m/Y')}}</td>
                         </tr>
                         <tr>
-                            <th>Date d'embauche</td>
-                            <td>1 mai 2018</td>
+                            <th>Date de livraison</td>
+                            <td>{{project.deliveryDate is empty ? "-" : project.deliveryDate|date("m/d/Y") }}</td>
                         </tr>
                     </tbody>
                 </table>
-                <a href="form.html" class="btn btn-info">
+                <a href="#" class="btn btn-info">
                     <i class="fa fa-pencil"></i>Modifier
                 </a>
-            </div>
-            <div class="tile">
-                <h3 class="title-title mb-4">Ajouter un temps</h3>
-                <form class="form-horizontal">
-                    <div class="form-group row">
-                        <label for="select-projects" class="control-label col-md-6">Projet concerné</label>
-                        <div class="col-md-6">
-                            <select class="form-control" id="select-projects">
-                                <option>Projet 1</option>
-                                <option>Projet 2</option>
-                                <option>Projet 3</option>
-                                <option>Projet 4</option>
-                                <option>Projet 5</option>
-                                <option>Projet 6</option>
-                                <option>Projet 7</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="days-count" class="control-label col-md-6">Nombre de jours</label>
-                        <div class="col-md-6">
-                            <input id="days-count" class="form-control" type="number" min="1">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="offset-md-6 col-md-8">
-                            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>Enregistrer</a>
-                        </div>
-                    </div>
-                </form>
             </div>
         </div>
         <div class="col-md-8">
             <div class="tile pb-5">
-                <h3 class="tile-title">Historique des temps de production</h3>
+                <h3 class="tile-title">Liste de employés</h3>
                 <div class="table-responsive">
                     <table class="table table-striped table-hover table-sm">
                         <thead>
@@ -164,7 +128,7 @@ Métiers |
                         </tbody>
                     </table>
                 </div>
-                <hr/>
+                <hr />
                 <nav class="float-right">
                     <ul class="pagination">
                         <li class="page-item disabled">

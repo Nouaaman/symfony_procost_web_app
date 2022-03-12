@@ -9,10 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Form\Type\JobType;
-use App\Manager\Job\JobManager;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use App\Form\JobType;
+use App\Manager\JobManager;
 
 class JobsController extends AbstractController
 {
@@ -23,7 +21,7 @@ class JobsController extends AbstractController
     ) {
     }
     #[Route('/jobs', name: 'jobs_homepage')]
-    public function listJobs(PaginatorInterface $paginatorInterface, Request $request): Response
+    public function list(PaginatorInterface $paginatorInterface, Request $request): Response
     {
         $jobs = $paginatorInterface->paginate(
             $this->jobRepository->findAll(),
@@ -37,7 +35,7 @@ class JobsController extends AbstractController
     }
 
     #[Route('/jobs/add', name: 'jobs_add', methods: ['GET', 'POST'])]
-    public function new(Request $request): Response
+    public function add(Request $request): Response
     {
         $job = new Job();
 
@@ -61,7 +59,7 @@ class JobsController extends AbstractController
 
 
     #[Route('/jobs/delete/{id}', name: 'jobs_delete', requirements: ['id' => '\d+'])]
-    public function deleteJob(int $id = null, Request $request): Response
+    public function delete(int $id = null, Request $request): Response
     {
 
         if ($id !== null) {
@@ -71,5 +69,39 @@ class JobsController extends AbstractController
             $this->jobManager->flashDeleteErrorMessage();
             return $this->redirectToRoute('jobs_homepage');
         }
+    }
+
+
+    #[Route('/jobs/edit/{id}', name: 'jobs_edit', requirements: ['id' => '\d+'])]
+    public function edit(int $id = null, Request $request): Response
+    {
+
+        if ($id == null) {
+            return $this->redirectToRoute('jobs_homepage');
+        }
+
+        $job = $this->jobRepository->find($id);
+
+        if (!$job) {
+            $this->jobManager->flashMessage('danger', 'Introuvable !');
+            return $this->redirectToRoute('jobs_homepage');
+        }
+
+        $form = $this->createForm(JobType::class, $job);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->jobManager->flashEditErrorMessage();
+            return $this->redirectToRoute('jobs_edit',['id'=>$id]);
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->jobManager->editJob($job);
+            return $this->redirectToRoute('jobs_edit',['id'=>$id]);
+        }
+
+        return $this->render('jobs/edit.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 }

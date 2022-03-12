@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Manager\Job;
+namespace App\Manager;
 
 use App\Entity\Job;
-use App\Event\Job\JobAdded;
 use App\Repository\JobRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -29,7 +28,11 @@ final class JobManager
             $this->em->flush();
             $this->flashDeleteSuccessMessage();
         } catch (\Throwable $error) {
-            $this->flashDeleteErrorMessage();
+            if ($error->getCode() == 1451) {
+                $this->flashMessage('danger', 'Ce métier est attribué a un employé !');
+            } else {
+                $this->flashMessage('danger', 'Erreur de suppression!');
+            }
         }
     }
     public function addJob(Job $job)
@@ -39,9 +42,16 @@ final class JobManager
         $this->flashAddSuccessMessage();
     }
 
+    public function editJob(Job $job)
+    {
+        $this->em->persist($job);
+        $this->em->flush();
+        $this->flashEditSuccessMessage();
+    }
+
     public function flashAddSuccessMessage()
     {
-        $this->flashMessage('success', 'le Métier a bien été enregistré !');
+        $this->flashMessage('success', 'le métier a bien été enregistré !');
     }
     public function flashAddErrorMessage()
     {
@@ -50,13 +60,23 @@ final class JobManager
 
     public function flashDeleteSuccessMessage()
     {
-        $this->flashMessage('success', 'le Métier a bien été supprimé !');
+        $this->flashMessage('success', 'le métier a bien été supprimé !');
     }
     public function flashDeleteErrorMessage()
     {
-        $this->flashMessage('danger', "le Métier n'a pas été supprimé !");
+        $this->flashMessage('danger', "le métier n'a pas été supprimé !");
     }
-    private function flashMessage(string $type, string $message)
+
+    public function flashEditSuccessMessage()
+    {
+        $this->flashMessage('success', 'Modification reussi !');
+    }
+    public function flashEditErrorMessage()
+    {
+        $this->flashMessage('danger', "le métier a pas été modifié !");
+    }
+
+    public function flashMessage(string $type, string $message)
     {
         $session = $this->requestStack->getSession();
         $flashBag = $session->getFlashBag();

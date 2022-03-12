@@ -36,6 +36,7 @@ class Project
     public function __construct()
     {
         $this->time = new ArrayCollection();
+        $this->setCreationDate(new \DateTime());
     }
 
     public function getId(): ?int
