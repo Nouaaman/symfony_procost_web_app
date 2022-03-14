@@ -71,6 +71,12 @@ class ProjectRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function currentProjects()
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.deliveryDate IS NULL');
+    }
+
     // /**
     //  * @return Project[] Returns an array of Project objects
     //  */

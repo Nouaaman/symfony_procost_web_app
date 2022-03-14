@@ -7,7 +7,8 @@
 <main class="app-content">
     <div class="app-title">
         <div>
-            <h1><i class="fa fa-users"></i>&nbsp;Suivi de {{employeeDetails.employee.firstName}} {{employeeDetails.employee.lastName}}</h1>
+            <h1><i class="fa fa-users"></i>&nbsp;Suivi de {{employeeDetails.employee.firstName}}
+                {{employeeDetails.employee.lastName}}</h1>
         </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item">
@@ -16,7 +17,8 @@
             <li class="breadcrumb-item">
                 <a href="#">Employés</a>
             </li>
-            <li class="breadcrumb-item">Suivi de {{employeeDetails.employee.firstName}} {{employeeDetails.employee.lastName}}</li>
+            <li class="breadcrumb-item">Suivi de {{employeeDetails.employee.firstName}}
+                {{employeeDetails.employee.lastName}}</li>
         </ul>
     </div>
     <div class="row">
@@ -56,25 +58,19 @@
             </div>
             <div class="tile">
                 <h3 class="title-title mb-4">Ajouter un temps</h3>
-                <form class="form-horizontal">
+                {{ include('_flash_message.html.twig') }}
+                {{ form_start(form) }}
+                <div class="form-horizontal">
                     <div class="form-group row">
                         <label for="select-projects" class="control-label col-md-6">Projet concerné</label>
                         <div class="col-md-6">
-                            <select class="form-control" id="select-projects">
-                                <option>Projet 1</option>
-                                <option>Projet 2</option>
-                                <option>Projet 3</option>
-                                <option>Projet 4</option>
-                                <option>Projet 5</option>
-                                <option>Projet 6</option>
-                                <option>Projet 7</option>
-                            </select>
+                            {{ form_widget(form.idProject, {'attr': {'class': 'form-control'} }) }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="days-count" class="control-label col-md-6">Nombre de jours</label>
                         <div class="col-md-6">
-                            <input id="days-count" class="form-control" type="number" min="1">
+                            {{ form_widget(form.productionTime, {'attr': {'class': 'form-control'} }) }}
                         </div>
                     </div>
                     <div class="row">
@@ -82,7 +78,8 @@
                             <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>Enregistrer</a>
                         </div>
                     </div>
-                </form>
+                </div>
+                {{ form_end(form) }}
             </div>
         </div>
         <div class="col-md-8">
@@ -99,88 +96,22 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {% for data in productionTimeHistory%}
+                            {% set totalCost = data.productionTime * data.dailyCost %}
                             <tr>
-                                <td>Nom du projet</td>
-                                <td>4 jours</td>
-                                <td>23-04-2018</td>
-                                <td>1 400 €</td>
+                                <td>{{data.name}}</td>
+                                <td>{{data.productionTime}}</td>
+                                <td>{{data.entryDate | date('d/m/Y')}}</td>
+                                <td>{{totalCost}}</td>
                             </tr>
-                            <tr>
-                                <td>Nom du projet</td>
-                                <td>4 jours</td>
-                                <td>23-04-2018</td>
-                                <td>1 400 €</td>
-                            </tr>
-                            <tr>
-                                <td>Nom du projet</td>
-                                <td>4 jours</td>
-                                <td>23-04-2018</td>
-                                <td>1 400 €</td>
-                            </tr>
-                            <tr>
-                                <td>Nom du projet</td>
-                                <td>4 jours</td>
-                                <td>23-04-2018</td>
-                                <td>1 400 €</td>
-                            </tr>
-                            <tr>
-                                <td>Nom du projet</td>
-                                <td>4 jours</td>
-                                <td>23-04-2018</td>
-                                <td>1 400 €</td>
-                            </tr>
-                            <tr>
-                                <td>Nom du projet</td>
-                                <td>4 jours</td>
-                                <td>23-04-2018</td>
-                                <td>1 400 €</td>
-                            </tr>
-                            <tr>
-                                <td>Nom du projet</td>
-                                <td>4 jours</td>
-                                <td>23-04-2018</td>
-                                <td>1 400 €</td>
-                            </tr>
-                            <tr>
-                                <td>Nom du projet</td>
-                                <td>4 jours</td>
-                                <td>23-04-2018</td>
-                                <td>1 400 €</td>
-                            </tr>
-                            <tr>
-                                <td>Nom du projet</td>
-                                <td>4 jours</td>
-                                <td>23-04-2018</td>
-                                <td>1 400 €</td>
-                            </tr>
-                            <tr>
-                                <td>Nom du projet</td>
-                                <td>4 jours</td>
-                                <td>23-04-2018</td>
-                                <td>1 400 €</td>
-                            </tr>
+                            {% endfor %}
+
                         </tbody>
                     </table>
                 </div>
                 <hr />
                 <nav class="float-right">
-                    <ul class="pagination">
-                        <li class="page-item disabled">
-                            <span class="page-link">&laquo;</span>
-                        </li>
-                        <li class="page-item active" aria-current="page">
-                            <span class="page-link">1<span class="sr-only">(current)</span></span>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">2</a></li>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">3</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">&raquo;</a>
-                        </li>
-                    </ul>
+                    {{ knp_pagination_render(productionTimeHistory) }}
                 </nav>
             </div>
         </div>

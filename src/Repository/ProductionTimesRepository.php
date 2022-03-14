@@ -53,6 +53,17 @@ class ProductionTimesRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
+    public function findAllByEmployee(int $id): array
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery('SELECT p.name, pt.productionTime , pt.entryDate , e.dailyCost
+                                   FROM App\Entity\Employee e, App\Entity\Project p, App\Entity\ProductionTimes pt
+                                   WHERE e.id = :idEmp AND pt.idEmployee = e.id AND pt.idProject = p.id
+                                   ORDER BY pt.entryDate DESC')
+            ->setParameter('idEmp', $id);
+        return $query->getResult();
+    }
+
 
 
     // /**

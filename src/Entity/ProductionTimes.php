@@ -22,6 +22,14 @@ class ProductionTimes
     #[ORM\ManyToOne(targetEntity: Project::class, inversedBy: 'time')]
     private $idProject;
 
+    #[ORM\Column(type: 'date')]
+    private $entryDate;
+
+    public function __construct()
+    {
+        $this->entryDate = new \DateTime();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -35,7 +43,6 @@ class ProductionTimes
     public function setProductionTime(int $productionTime): self
     {
         $this->productionTime = $productionTime;
-
         return $this;
     }
 
@@ -59,6 +66,18 @@ class ProductionTimes
     public function setIdProject(?Project $idProject): self
     {
         $this->idProject = $idProject;
+
+        return $this;
+    }
+
+    public function getEntryDate(): ?\DateTimeInterface
+    {
+        return $this->entryDate;
+    }
+
+    public function setEntryDate(\DateTimeInterface $entryDate): self
+    {
+        $this->entryDate = $entryDate;
 
         return $this;
     }

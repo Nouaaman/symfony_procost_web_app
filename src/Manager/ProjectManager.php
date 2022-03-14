@@ -42,12 +42,30 @@ final class ProjectManager
         $this->flashAddSuccessMessage();
     }
 
+
     public function editProject(Project $project)
     {
         $this->em->persist($project);
         $this->em->flush();
         $this->flashEditSuccessMessage();
     }
+
+    // public function deliverProject(int $id): void
+    // {
+    //     try {
+    //         $this->em->createQueryBuilder()->update(Project::class, 'p')
+    //             ->set('p.deliveryDate', ':date')
+    //             ->where('p.id = :id')
+    //             ->setParameter('date', new \DateTime())
+    //             ->setParameter('id', $id)
+    //             ->getQuery()
+    //             ->execute();
+
+    //         $this->flashMessage('success', 'Project livré !');
+    //     } catch (\Throwable $th) {
+    //         $this->flashMessage('danger', 'Erreur: ' . $th);
+    //     }
+    // }
 
     public function flashAddSuccessMessage()
     {
