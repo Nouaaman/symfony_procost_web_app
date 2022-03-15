@@ -77,6 +77,21 @@ class ProjectRepository extends ServiceEntityRepository
             ->where('p.deliveryDate IS NULL');
     }
 
+    public function employeesWorkedOnProject(int $id): array
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery("SELECT 
+                                        e.firstName, e.lastName, SUM(pt.productionTime) AS totalDays , e.dailyCost
+                                   FROM 
+                                        App\Entity\Employee e, App\Entity\Project p, App\Entity\ProductionTimes pt
+                                   WHERE 
+                                        p.id = :idProj AND pt.idEmployee = e.id AND pt.idProject = p.id
+                                   GROUP BY 
+                                        e.firstName, e.lastName")
+            ->setParameter('idProj', $id);
+        return $query->getResult();
+    }
+
     // /**
     //  * @return Project[] Returns an array of Project objects
     //  */

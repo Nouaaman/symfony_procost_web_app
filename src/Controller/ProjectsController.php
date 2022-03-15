@@ -59,11 +59,27 @@ class ProjectsController extends AbstractController
     }
 
     #[Route('/projects/details/{id}', name: 'projects_details', requirements: ['id' => '\d+'])]
-    public function details(int $id): Response
+    public function details(int $id = null, PaginatorInterface $paginatorInterface, Request $request): Response
     {
+        if ($id == null) {
+            return $this->redirectToRoute('projects_homepage');
+        }
         $projectDetails = $this->projectRepository->find($id);
+
+        if (!$projectDetails) {
+            $this->employeeManager->flashMessage('danger', 'Introuvable !');
+            return $this->redirectToRoute('projects_homepage');
+        }
+
+        $employeesWorkOnProject = $paginatorInterface->paginate(
+            $this->projectRepository->employeesWorkedOnProject($id),
+            $request->query->getInt('page', 1),
+            10
+        );
+
         return $this->render('projects/details.html.twig', [
-            'project' => $projectDetails
+            'project' => $projectDetails,
+            'employees' => $employeesWorkOnProject
         ]);
     }
 

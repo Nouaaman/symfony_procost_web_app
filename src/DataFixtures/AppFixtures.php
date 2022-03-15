@@ -50,7 +50,7 @@ class AppFixtures extends Fixture
                 ->setFirstName('FirstName ' . $i)
                 ->setLastName('LastName ' . $i)
                 ->setEmail('email' . $i . '@email.com')
-                ->setDailyCost(1800, 0)
+                ->setDailyCost(rand(100, 2400))
                 ->setHiringDate(new DateTime())
                 ->setIdJob($this->getReference(Job::class . random_int(0, count(self::DATA_JOBS) - 1)));
 
@@ -64,7 +64,8 @@ class AppFixtures extends Fixture
             $project = (new Project())
                 ->setName('Project ' . $i)
                 ->setDescription('this is a description ' . $i . '.')
-                ->setCreationDate(new DateTime());
+                ->setCreationDate(new DateTime())
+                ->setSellingPrice(rand(1000, 2500));
             $this->manager->persist($project);
         }
     }
