@@ -23,7 +23,6 @@ class MainController extends AbstractController
     #[Route('/', name: 'main_homepage')]
     public function index(): Response
     {
-        dump($this->ProductionTimesRepository->latestProductionTimes());
         return $this->render('main/index.html.twig', [
             'latestProjects' => $this->projectRepository->theLatestProjects(),
             'nbrCurrentProjects' => $this->projectRepository->nbrCurrentProjects(),

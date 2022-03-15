@@ -23,8 +23,8 @@ final class EmployeeManager
     public function deleteEmployee(int $id)
     {
         try {
-            $job = $this->employeeRepository->find($id);
-            $this->em->remove($job);
+            $employee = $this->employeeRepository->find($id);
+            $this->em->remove($employee);
             $this->em->flush();
             $this->flashDeleteSuccessMessage();
         } catch (\Throwable $error) {

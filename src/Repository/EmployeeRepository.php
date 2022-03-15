@@ -72,6 +72,12 @@ class EmployeeRepository extends ServiceEntityRepository
         return $query->getOneOrNullResult();
     }
 
+    public function topEmployee(): array
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery('SELECT e as employee , j.name as job FROM App\Entity\Employee e, App\Entity\Job j WHERE e.idJob = j.id');
+        return $query->getResult();
+    }
 
     // private function addJoinJob(QueryBuilder $qb): void
     // {
