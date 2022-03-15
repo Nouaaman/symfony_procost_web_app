@@ -64,6 +64,17 @@ class ProductionTimesRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    public function latestProductionTimes(): array
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery('SELECT e.id AS idEmployee, e.firstName, e.lastName, p.id AS idProject, p.name, pt.productionTime
+                                   FROM App\Entity\Employee e, App\Entity\Project p, App\Entity\ProductionTimes pt
+                                   WHERE pt.idEmployee = e.id AND pt.idProject = p.id
+                                   ORDER BY pt.entryDate DESC')
+            ->setMaxResults(5);
+        return $query->getResult();
+    }
+
 
 
     // /**

@@ -152,30 +152,14 @@ Acceuil |
             <div class="tile">
                 <h2 class="tile-title text-center">Temps de production</h2>
                 <ul class="list-group">
+                    {% for data in latestProductionTimes%}
                     <li class="list-group-item">
-                        <a href="#">James Brown</a> a travaillé sur <a href="#">Projet 1</a>
-                        <div class="text-muted font-italic text-right">4 jours</div>
+                        <a href="{{path('employees_details',{'id':data.idEmployee})}}">{{data.firstName}}
+                            {{data.lastName}}</a> a travaillé sur
+                        <a href="{{path('projects_details',{'id':data.idProject})}}">{{data.name}}</a>
+                        <div class="text-muted font-italic text-right">{{data.productionTime}} jours</div>
                     </li>
-                    <li class="list-group-item">
-                        <a href="#">James Brown</a> a travaillé sur <a href="#">Projet 1</a>
-                        <div class="text-muted font-italic text-right">4 jours</div>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="#">James Brown</a> a travaillé sur <a href="#">Projet 1</a>
-                        <div class="text-muted font-italic text-right">4 jours</div>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="#">James Brown</a> a travaillé sur <a href="#">Projet 1</a>
-                        <div class="text-muted font-italic text-right">4 jours</div>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="#">James Brown</a> a travaillé sur <a href="#">Projet 1</a>
-                        <div class="text-muted font-italic text-right">4 jours</div>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="#">James Brown</a> a travaillé sur <a href="#">Projet 1</a>
-                        <div class="text-muted font-italic text-right">4 jours</div>
-                    </li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>

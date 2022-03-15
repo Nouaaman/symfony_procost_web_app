@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Project;
+
 use App\Repository\EmployeeRepository;
 use App\Repository\ProductionTimesRepository;
 use App\Repository\ProjectRepository;
@@ -23,12 +23,14 @@ class MainController extends AbstractController
     #[Route('/', name: 'main_homepage')]
     public function index(): Response
     {
+        dump($this->ProductionTimesRepository->latestProductionTimes());
         return $this->render('main/index.html.twig', [
             'latestProjects' => $this->projectRepository->theLatestProjects(),
             'nbrCurrentProjects' => $this->projectRepository->nbrCurrentProjects(),
             'nbrDeliveredProjects' => $this->projectRepository->nbrDeliveredProjects(),
             'nbrEmployees' => $this->employeeRepository->nbrEmployees(),
-            'productionDays' => $this->ProductionTimesRepository->productionDays()
+            'productionDays' => $this->ProductionTimesRepository->productionDays(),
+            'latestProductionTimes' => $this->ProductionTimesRepository->latestProductionTimes()
         ]);
     }
 }
