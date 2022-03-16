@@ -24,12 +24,12 @@ class MainController extends AbstractController
     public function index(): Response
     {
         return $this->render('main/index.html.twig', [
-            'latestProjects' => $this->projectRepository->theLatestProjects(),
             'nbrCurrentProjects' => $this->projectRepository->nbrCurrentProjects(),
             'nbrDeliveredProjects' => $this->projectRepository->nbrDeliveredProjects(),
             'nbrEmployees' => $this->employeeRepository->nbrEmployees(),
             'productionDays' => $this->ProductionTimesRepository->productionDays(),
-            'latestProductionTimes' => $this->ProductionTimesRepository->latestProductionTimes()
+            'latestProjects' => $this->projectRepository->theLatestProjects(),
+            'latestProductionTimes' => $this->ProductionTimesRepository->latestProductionTimes(),
         ]);
     }
 }

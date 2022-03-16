@@ -101,7 +101,6 @@ class EmployeesController extends AbstractController
             $request->query->getInt('page', 1),
             10
         );
-        dump($productionTimeHistory);
         return $this->render('employees/details.html.twig', [
             'employeeDetails' => $employeeDetails,
             'productionTimeHistory' => $productionTimeHistory,

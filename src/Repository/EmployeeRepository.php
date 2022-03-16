@@ -72,11 +72,41 @@ class EmployeeRepository extends ServiceEntityRepository
         return $query->getOneOrNullResult();
     }
 
-    public function topEmployee(): array
+    public function topEmployee()
     {
-        $em = $this->getEntityManager();
-        $query = $em->createQuery('SELECT e as employee , j.name as job FROM App\Entity\Employee e, App\Entity\Job j WHERE e.idJob = j.id');
-        return $query->getResult();
+    //     $em = $this->getEntityManager();
+
+    //     $rsm = new ResultSetMapping;
+    //     $rsm->addEntityResult('App\Entity\Employee', 'e');
+    //     $rsm->addEntityResult('App\Entity\ProductionTimes', 'pt');
+    //     $rsm->addFieldResult('e', 'id', 'id');
+    //     $rsm->addFieldResult('e', 'firstName', 'firstName');
+    //     $rsm->addFieldResult('e', 'dailyCost', 'dailyCost');
+    //     $rsm->addFieldResult('e', 'hiringDate', 'hiringDate');
+    //     // $rsm->addFieldResult('e2', 'sumTimes', 'sumTimes');
+    //     // $rsm->addFieldResult('pt', 'productionTime', 'productionTime');
+
+    //     $query = $em->createNativeQuery('SELECT 
+    //         e.id, 
+    //         e.firstName, 
+    //         e.lastName, 
+    //         e.dailyCost, 
+    //         e.hiringDate, 
+    //         e2.sumTimes 
+    //     FROM App\Entity\Employee e INNER JOIN ( SELECT e.id, 
+    //             SUM(pt.productionTime) AS sumTimes 
+    //         FROM 
+    //             App\Entity\ProductionTimes pt, 
+    //             App\Entity\Employee e 
+    //         WHERE 
+    //             pt.idImployee = e.id 
+    //             GROUP BY e.id 
+    //             ORDER BY SUM(pt.productionTime) 
+    //             DESC LIMIT 1 ) AS e2 
+    //         ON e.id = e2.id', $rsm);
+    //     dump($query);
+
+    //     return $query->getResult();
     }
 
     // private function addJoinJob(QueryBuilder $qb): void
