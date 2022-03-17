@@ -32,4 +32,10 @@ class MainController extends AbstractController
             'latestProductionTimes' => $this->ProductionTimesRepository->latestProductionTimes(),
         ]);
     }
+
+    #[Route('notFound', name: 'main_notfound')]
+    public function notFound(): Response
+    {
+        return $this->render('notFound.html.twig', []);
+    }
 }
