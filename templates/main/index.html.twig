@@ -58,7 +58,9 @@ Acceuil |
                         <div class="card-header text-center">Rentabilité</div>
                         <div class="card-body">
                             <p class="text-muted">
-                                <i class="fa fa-database mr-2 text-primary"></i> 70% RENTABLE
+                                <i class="fa fa-database mr-2 text-primary"></i> 
+                                {#{{ ((totalNoRateProject)*100/(nbrDeliveredProjects))|number_format }}#}
+                                % RENTABLE
                             </p>
                             <div class="embed-responsive embed-responsive-16by9">
                                 <canvas id="ratio-chart" class="embed-responsive-item"></canvas>
@@ -71,7 +73,8 @@ Acceuil |
                         <div class="card-header text-center">Taux de livraison</div>
                         <div class="card-body">
                             <p class="text-muted">
-                                <i class="fa fa fa-check-square-o mr-2 text-primary"></i> 35% Livrés
+                                <i class="fa fa fa-check-square-o mr-2 text-primary"></i>
+                                {{((nbrDeliveredProjects * 100) / totalProjects) | round}} % Livrés
                             </p>
                             <div class="embed-responsive embed-responsive-16by9">
                                 <canvas id="delivered-chart" class="embed-responsive-item"></canvas>
@@ -133,17 +136,7 @@ Acceuil |
                             </th>
                         </tr>
                         {% endfor %}
-                        <!-- <tr>
-                            <th>
-                                <a href="#">Mon projet</a>
-                            </th>
-                            <th>18/03/2018</th>
-                            <th>20 000 €</th>
-                            <th>3 200 €</th>
-                            <th>
-                                <span class="badge badge-danger">NON</span>
-                            </th>
-                        </tr> -->
+
                     </tbody>
                 </table>
             </div>
@@ -164,6 +157,21 @@ Acceuil |
             </div>
         </div>
     </div>
+   
+    
 </main>
 
+{% endblock %}
+
+{% block js %}
+{{parent()}}
+<!-- Specific page JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"
+    integrity="sha256-oSgtFCCmHWRPQ/JmR4OoZ3Xke1Pw4v50uh6pLcu+fIc=" crossorigin="anonymous"></script>
+<script>
+    var ratioData = [70, 30];
+
+    var deliveredData = [{{((nbrDeliveredProjects) * 100 / (totalProjects))}}, {{(100 - ((nbrDeliveredProjects) * 100 / (totalProjects)))}}];
+</script>
+<script src="/js/dashboard.js"></script>
 {% endblock %}

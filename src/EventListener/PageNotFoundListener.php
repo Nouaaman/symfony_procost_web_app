@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\RouterInterface;
 
 
-class Redirect404ToHomepageListener
+class PageNotFoundListener
 {
     /**
      * @var RouterInterface
