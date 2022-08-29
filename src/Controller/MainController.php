@@ -32,6 +32,7 @@ class MainController extends AbstractController
             'latestProjects' => $this->projectRepository->theLatestProjects(),
             'latestProductionTimes' => $this->ProductionTimesRepository->latestProductionTimes(),
             'totalProjects' => $this->projectRepository->totalProjects()
+            // 'totalProjects' => 1
         ]);
     }
 
