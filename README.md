@@ -1,5 +1,5 @@
 # symfony_procost_nroudane
-## Procost: first symfony project
+## Procost: User, task, and cost management web app - symfony school project
 - Prenom: Nouaaman
 - Email: nouaaman.r@outlook.com
 
